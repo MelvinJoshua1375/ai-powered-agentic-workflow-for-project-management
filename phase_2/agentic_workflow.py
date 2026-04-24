@@ -179,27 +179,36 @@ development_engineer_evaluation_agent = EvaluationAgent(
 # ---------------------------------------------------------------------------
 # 11. Support functions for each role
 # ---------------------------------------------------------------------------
-# Each support function passes the raw workflow query directly to its
-# EvaluationAgent. The EvaluationAgent internally calls its worker agent
-# (respond()) inside its refinement loop, so the support function does NOT
-# pre-call respond() -- doing so would create a double-call / hallucination
-# loop (the evaluator would treat the worker's answer as a new prompt).
+# Per the project rubric, each support function must:
+#   (1) Call respond() on its corresponding KnowledgeAugmentedPromptAgent,
+#   (2) Pass the returned response to the corresponding EvaluationAgent's
+#       evaluate() method,
+#   (3) Return the final, validated response (``final_response`` key).
 
 def product_manager_support_function(query):
     """Run the Product Manager (user stories) pipeline for a workflow step."""
-    evaluation_result = product_manager_evaluation_agent.evaluate(query)
+    response_from_knowledge_agent = product_manager_knowledge_agent.respond(query)
+    evaluation_result = product_manager_evaluation_agent.evaluate(
+        response_from_knowledge_agent
+    )
     return evaluation_result["final_response"]
 
 
 def program_manager_support_function(query):
     """Run the Program Manager (features) pipeline for a workflow step."""
-    evaluation_result = program_manager_evaluation_agent.evaluate(query)
+    response_from_knowledge_agent = program_manager_knowledge_agent.respond(query)
+    evaluation_result = program_manager_evaluation_agent.evaluate(
+        response_from_knowledge_agent
+    )
     return evaluation_result["final_response"]
 
 
 def development_engineer_support_function(query):
     """Run the Development Engineer (tasks) pipeline for a workflow step."""
-    evaluation_result = development_engineer_evaluation_agent.evaluate(query)
+    response_from_knowledge_agent = development_engineer_knowledge_agent.respond(query)
+    evaluation_result = development_engineer_evaluation_agent.evaluate(
+        response_from_knowledge_agent
+    )
     return evaluation_result["final_response"]
 
 
