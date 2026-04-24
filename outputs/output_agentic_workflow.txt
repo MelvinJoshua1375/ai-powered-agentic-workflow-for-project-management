@@ -1,0 +1,338 @@
+$ cd phase_2
+$ python agentic_workflow.py
+
+
+*** Workflow execution started ***
+
+Task to complete in this workflow, workflow prompt = Create a comprehensive development plan for the Email Router product, including user stories, grouped product features, and detailed engineering tasks.
+
+Defining workflow steps from the workflow prompt
+Extracted 3 step(s):
+  1. Define the user stories for the Email Router product based on the product specification.
+  2. Group the user stories into cohesive product features for the Email Router.
+  3. Break the Email Router user stories and features into detailed engineering tasks.
+
+
+=== Executing step 1/3 ===
+Step: Define the user stories for the Email Router product based on the product specification.
+0.8612
+0.4397
+0.3210
+[Router] Best agent: Product Manager (score=0.861)
+
+--- Interaction 1 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+Define the user stories for the Email Router product based on the product specification.
+Worker Agent Response:
+As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+As a Subject Matter Expert, I want only relevant complex inquiries routed to me so that I am not overwhelmed by misdirected emails.
+As a Subject Matter Expert, I want forwarded emails to arrive with the original context and previous correspondence attached so that I can respond accurately without hunting for background information.
+As an IT Administrator, I want a dashboard of response-time and accuracy metrics so that I can monitor the Email Router's performance and plan capacity.
+As an IT Administrator, I want to configure routing rules and the knowledge base through a UI so that I can keep the system aligned with evolving business needs.
+As a Compliance Officer, I want personally identifiable information to be masked before processing so that the system stays compliant with GDPR and CCPA.
+As an End Customer, I want to receive an accurate response quickly so that I am not left waiting for routine information.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+Yes. Every line follows the structure "As a [type of user], I want [an action or feature] so that [benefit/value].", so the answer meets the criterion.
+ Step 3: Check if evaluation is positive
+Final solution accepted.
+Result for step 1:
+As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+As a Subject Matter Expert, I want only relevant complex inquiries routed to me so that I am not overwhelmed by misdirected emails.
+As a Subject Matter Expert, I want forwarded emails to arrive with the original context and previous correspondence attached so that I can respond accurately without hunting for background information.
+As an IT Administrator, I want a dashboard of response-time and accuracy metrics so that I can monitor the Email Router's performance and plan capacity.
+As an IT Administrator, I want to configure routing rules and the knowledge base through a UI so that I can keep the system aligned with evolving business needs.
+As a Compliance Officer, I want personally identifiable information to be masked before processing so that the system stays compliant with GDPR and CCPA.
+As an End Customer, I want to receive an accurate response quickly so that I am not left waiting for routine information.
+
+
+=== Executing step 2/3 ===
+Step: Group the user stories into cohesive product features for the Email Router.
+0.4521
+0.8734
+0.3980
+[Router] Best agent: Program Manager (score=0.873)
+
+--- Interaction 1 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+Group the user stories into cohesive product features for the Email Router.
+Worker Agent Response:
+Feature Name: Automated Email Classification
+Description: Uses LLM-based intent and category detection to label every incoming email and assign a confidence score.
+Key Functionality: Real-time ingestion via SMTP/IMAP/REST, intent classification, urgency scoring, confidence threshold routing.
+User Benefit: Staff no longer manually sort emails; the system decides what is routine vs. escalation, saving triage time.
+
+Feature Name: Automated Response Generation
+Description: Drafts contextually accurate replies for routine inquiries using a RAG system over the organisation's knowledge base.
+Key Functionality: Knowledge-base retrieval, response drafting, human-in-the-loop approval workflow, automatic dispatch once approved.
+User Benefit: Routine customer questions are answered in minutes with consistent messaging, lifting response time and quality simultaneously.
+
+Feature Name: Intelligent Routing to Subject Matter Experts
+Description: Forwards complex or high-confidence inquiries to the correct SME with full conversational context attached.
+Key Functionality: Rule-based routing engine, SME matching by topic, context-aware forwarding of metadata and previous correspondence.
+User Benefit: SMEs receive only relevant work with the background they need, reducing back-and-forth and hand-offs.
+
+Feature Name: Management Dashboard and Configuration
+Description: A web UI for IT administrators to monitor performance and tune the system.
+Key Functionality: Live metrics (response time, accuracy, backlog), configuration panel for knowledge base and routing rules, manual override controls.
+User Benefit: Admins get visibility and levers to continuously improve the system's behaviour without code changes.
+
+Feature Name: Compliance and Data Protection
+Description: Keeps every message flow aligned with GDPR, CCPA, and internal security policies.
+Key Functionality: AES-256 encryption at rest and in transit (TLS 1.2+), RBAC with MFA for admin access, PII masking before processing.
+User Benefit: The organisation can deploy the router with confidence that sensitive information is protected and auditable.
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+Yes. Each feature is presented with the required fields (Feature Name, Description, Key Functionality, User Benefit), so the answer meets the criterion.
+ Step 3: Check if evaluation is positive
+Final solution accepted.
+Result for step 2:
+Feature Name: Automated Email Classification
+Description: Uses LLM-based intent and category detection to label every incoming email and assign a confidence score.
+Key Functionality: Real-time ingestion via SMTP/IMAP/REST, intent classification, urgency scoring, confidence threshold routing.
+User Benefit: Staff no longer manually sort emails; the system decides what is routine vs. escalation, saving triage time.
+
+Feature Name: Automated Response Generation
+Description: Drafts contextually accurate replies for routine inquiries using a RAG system over the organisation's knowledge base.
+Key Functionality: Knowledge-base retrieval, response drafting, human-in-the-loop approval workflow, automatic dispatch once approved.
+User Benefit: Routine customer questions are answered in minutes with consistent messaging, lifting response time and quality simultaneously.
+
+Feature Name: Intelligent Routing to Subject Matter Experts
+Description: Forwards complex or high-confidence inquiries to the correct SME with full conversational context attached.
+Key Functionality: Rule-based routing engine, SME matching by topic, context-aware forwarding of metadata and previous correspondence.
+User Benefit: SMEs receive only relevant work with the background they need, reducing back-and-forth and hand-offs.
+
+Feature Name: Management Dashboard and Configuration
+Description: A web UI for IT administrators to monitor performance and tune the system.
+Key Functionality: Live metrics (response time, accuracy, backlog), configuration panel for knowledge base and routing rules, manual override controls.
+User Benefit: Admins get visibility and levers to continuously improve the system's behaviour without code changes.
+
+Feature Name: Compliance and Data Protection
+Description: Keeps every message flow aligned with GDPR, CCPA, and internal security policies.
+Key Functionality: AES-256 encryption at rest and in transit (TLS 1.2+), RBAC with MFA for admin access, PII masking before processing.
+User Benefit: The organisation can deploy the router with confidence that sensitive information is protected and auditable.
+
+
+=== Executing step 3/3 ===
+Step: Break the Email Router user stories and features into detailed engineering tasks.
+0.4108
+0.4862
+0.9015
+[Router] Best agent: Development Engineer (score=0.902)
+
+--- Interaction 1 ---
+ Step 1: Worker agent generates a response to the prompt
+Prompt:
+Break the Email Router user stories and features into detailed engineering tasks.
+Worker Agent Response:
+Task ID: ER-001
+Task Title: Implement SMTP/IMAP/REST email ingestion connectors
+Related User Story: As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+Description: Build pluggable connectors that pull messages from the organisation's SMTP/IMAP servers and a REST webhook, extract headers and body, and publish to the classification queue.
+Acceptance Criteria: Connectors authenticate securely, deliver at least one message end-to-end in staging, handle reconnection on transient failures.
+Estimated Effort: 5 story points
+Dependencies: None
+
+Task ID: ER-002
+Task Title: Build LLM-based intent & urgency classifier
+Related User Story: As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+Description: Wrap gpt-3.5-turbo with a prompt template that returns category, urgency, and a confidence score. Persist the classification alongside the message.
+Acceptance Criteria: 90% accuracy on a labelled validation set; confidence returned as a float 0-1; results stored in the messages table.
+Estimated Effort: 8 story points
+Dependencies: ER-001
+
+Task ID: ER-003
+Task Title: Knowledge base vector store + retrieval service
+Related User Story: As an End Customer, I want to receive an accurate response quickly so that I am not left waiting for routine information.
+Description: Stand up a vector database, embed all organisational knowledge documents, and expose a retrieval API that returns the top-k chunks for a query.
+Acceptance Criteria: Embeddings re-generated nightly; retrieval returns results under 200ms p95; API secured with service-to-service auth.
+Estimated Effort: 8 story points
+Dependencies: None
+
+Task ID: ER-004
+Task Title: RAG-based response drafting pipeline
+Related User Story: As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+Description: Compose the retrieved context with the incoming email and ask the LLM to draft a reply. Store drafts in a pending-approval queue.
+Acceptance Criteria: Draft reply includes citations to retrieved chunks; drafts persisted with status "awaiting approval".
+Estimated Effort: 5 story points
+Dependencies: ER-002, ER-003
+
+Task ID: ER-005
+Task Title: Human-in-the-loop approval UI
+Related User Story: As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+Description: Web UI to review, edit, approve, or reject drafted responses before dispatch.
+Acceptance Criteria: Reviewer can approve or edit in under 30 seconds; all actions audited.
+Estimated Effort: 5 story points
+Dependencies: ER-004
+
+Task ID: ER-006
+Task Title: Rule-based SME routing engine
+Related User Story: As a Subject Matter Expert, I want only relevant complex inquiries routed to me so that I am not overwhelmed by misdirected emails.
+Description: Evaluate routing rules against each classified message and forward to the SME inbox with full metadata.
+Acceptance Criteria: Rules configurable via UI; routing decisions logged with reason codes.
+Estimated Effort: 5 story points
+Dependencies: ER-002
+
+Task ID: ER-007
+Task Title: Context-aware SME handoff packaging
+Related User Story: As a Subject Matter Expert, I want forwarded emails to arrive with the original context and previous correspondence attached so that I can respond accurately without hunting for background information.
+Description: Bundle previous thread messages, classification metadata, and any retrieved knowledge into the forwarded email.
+Acceptance Criteria: Forwarded email includes full prior thread and a one-line AI summary; size under 10 MB.
+Estimated Effort: 3 story points
+Dependencies: ER-006
+
+Task ID: ER-008
+Task Title: Metrics dashboard (response time, accuracy, backlog)
+Related User Story: As an IT Administrator, I want a dashboard of response-time and accuracy metrics so that I can monitor the Email Router's performance and plan capacity.
+Description: Emit metrics from every pipeline stage and render them in a Grafana-like dashboard.
+Acceptance Criteria: Response-time p50/p95, classifier accuracy, and queue depth visible in real time.
+Estimated Effort: 5 story points
+Dependencies: ER-002, ER-006
+
+Task ID: ER-009
+Task Title: Admin configuration panel (routing rules + knowledge base)
+Related User Story: As an IT Administrator, I want to configure routing rules and the knowledge base through a UI so that I can keep the system aligned with evolving business needs.
+Description: CRUD UI for routing rules, knowledge documents, and system settings with RBAC + MFA.
+Acceptance Criteria: All admin actions auditable; rules hot-reloaded without restart.
+Estimated Effort: 8 story points
+Dependencies: ER-003, ER-006
+
+Task ID: ER-010
+Task Title: PII masking and encryption at rest/in transit
+Related User Story: As a Compliance Officer, I want personally identifiable information to be masked before processing so that the system stays compliant with GDPR and CCPA.
+Description: Detect and mask PII before classification; encrypt stored messages with AES-256 and enforce TLS 1.2+ on every network hop.
+Acceptance Criteria: PII masked in >=99% of synthetic validation samples; external pen-test of encryption passes.
+Estimated Effort: 8 story points
+Dependencies: ER-001
+ Step 2: Evaluator agent judges the response
+Evaluator Agent Evaluation:
+Yes. Each task contains Task ID, Task Title, Related User Story, Description, Acceptance Criteria, Estimated Effort, and Dependencies in the required structure, so the answer meets the criterion.
+ Step 3: Check if evaluation is positive
+Final solution accepted.
+Result for step 3:
+(same engineering task list as above, ER-001 through ER-010)
+
+
+*** Workflow execution complete ***
+
+Final consolidated project plan (all routed steps):
+
+As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+As a Subject Matter Expert, I want only relevant complex inquiries routed to me so that I am not overwhelmed by misdirected emails.
+As a Subject Matter Expert, I want forwarded emails to arrive with the original context and previous correspondence attached so that I can respond accurately without hunting for background information.
+As an IT Administrator, I want a dashboard of response-time and accuracy metrics so that I can monitor the Email Router's performance and plan capacity.
+As an IT Administrator, I want to configure routing rules and the knowledge base through a UI so that I can keep the system aligned with evolving business needs.
+As a Compliance Officer, I want personally identifiable information to be masked before processing so that the system stays compliant with GDPR and CCPA.
+As an End Customer, I want to receive an accurate response quickly so that I am not left waiting for routine information.
+
+
+Feature Name: Automated Email Classification
+Description: Uses LLM-based intent and category detection to label every incoming email and assign a confidence score.
+Key Functionality: Real-time ingestion via SMTP/IMAP/REST, intent classification, urgency scoring, confidence threshold routing.
+User Benefit: Staff no longer manually sort emails; the system decides what is routine vs. escalation, saving triage time.
+
+Feature Name: Automated Response Generation
+Description: Drafts contextually accurate replies for routine inquiries using a RAG system over the organisation's knowledge base.
+Key Functionality: Knowledge-base retrieval, response drafting, human-in-the-loop approval workflow, automatic dispatch once approved.
+User Benefit: Routine customer questions are answered in minutes with consistent messaging, lifting response time and quality simultaneously.
+
+Feature Name: Intelligent Routing to Subject Matter Experts
+Description: Forwards complex or high-confidence inquiries to the correct SME with full conversational context attached.
+Key Functionality: Rule-based routing engine, SME matching by topic, context-aware forwarding of metadata and previous correspondence.
+User Benefit: SMEs receive only relevant work with the background they need, reducing back-and-forth and hand-offs.
+
+Feature Name: Management Dashboard and Configuration
+Description: A web UI for IT administrators to monitor performance and tune the system.
+Key Functionality: Live metrics (response time, accuracy, backlog), configuration panel for knowledge base and routing rules, manual override controls.
+User Benefit: Admins get visibility and levers to continuously improve the system's behaviour without code changes.
+
+Feature Name: Compliance and Data Protection
+Description: Keeps every message flow aligned with GDPR, CCPA, and internal security policies.
+Key Functionality: AES-256 encryption at rest and in transit (TLS 1.2+), RBAC with MFA for admin access, PII masking before processing.
+User Benefit: The organisation can deploy the router with confidence that sensitive information is protected and auditable.
+
+
+Task ID: ER-001
+Task Title: Implement SMTP/IMAP/REST email ingestion connectors
+Related User Story: As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+Description: Build pluggable connectors that pull messages from the organisation's SMTP/IMAP servers and a REST webhook, extract headers and body, and publish to the classification queue.
+Acceptance Criteria: Connectors authenticate securely, deliver at least one message end-to-end in staging, handle reconnection on transient failures.
+Estimated Effort: 5 story points
+Dependencies: None
+
+Task ID: ER-002
+Task Title: Build LLM-based intent & urgency classifier
+Related User Story: As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+Description: Wrap gpt-3.5-turbo with a prompt template that returns category, urgency, and a confidence score. Persist the classification alongside the message.
+Acceptance Criteria: 90% accuracy on a labelled validation set; confidence returned as a float 0-1; results stored in the messages table.
+Estimated Effort: 8 story points
+Dependencies: ER-001
+
+Task ID: ER-003
+Task Title: Knowledge base vector store + retrieval service
+Related User Story: As an End Customer, I want to receive an accurate response quickly so that I am not left waiting for routine information.
+Description: Stand up a vector database, embed all organisational knowledge documents, and expose a retrieval API that returns the top-k chunks for a query.
+Acceptance Criteria: Embeddings re-generated nightly; retrieval returns results under 200ms p95; API secured with service-to-service auth.
+Estimated Effort: 8 story points
+Dependencies: None
+
+Task ID: ER-004
+Task Title: RAG-based response drafting pipeline
+Related User Story: As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+Description: Compose the retrieved context with the incoming email and ask the LLM to draft a reply. Store drafts in a pending-approval queue.
+Acceptance Criteria: Draft reply includes citations to retrieved chunks; drafts persisted with status "awaiting approval".
+Estimated Effort: 5 story points
+Dependencies: ER-002, ER-003
+
+Task ID: ER-005
+Task Title: Human-in-the-loop approval UI
+Related User Story: As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+Description: Web UI to review, edit, approve, or reject drafted responses before dispatch.
+Acceptance Criteria: Reviewer can approve or edit in under 30 seconds; all actions audited.
+Estimated Effort: 5 story points
+Dependencies: ER-004
+
+Task ID: ER-006
+Task Title: Rule-based SME routing engine
+Related User Story: As a Subject Matter Expert, I want only relevant complex inquiries routed to me so that I am not overwhelmed by misdirected emails.
+Description: Evaluate routing rules against each classified message and forward to the SME inbox with full metadata.
+Acceptance Criteria: Rules configurable via UI; routing decisions logged with reason codes.
+Estimated Effort: 5 story points
+Dependencies: ER-002
+
+Task ID: ER-007
+Task Title: Context-aware SME handoff packaging
+Related User Story: As a Subject Matter Expert, I want forwarded emails to arrive with the original context and previous correspondence attached so that I can respond accurately without hunting for background information.
+Description: Bundle previous thread messages, classification metadata, and any retrieved knowledge into the forwarded email.
+Acceptance Criteria: Forwarded email includes full prior thread and a one-line AI summary; size under 10 MB.
+Estimated Effort: 3 story points
+Dependencies: ER-006
+
+Task ID: ER-008
+Task Title: Metrics dashboard (response time, accuracy, backlog)
+Related User Story: As an IT Administrator, I want a dashboard of response-time and accuracy metrics so that I can monitor the Email Router's performance and plan capacity.
+Description: Emit metrics from every pipeline stage and render them in a Grafana-like dashboard.
+Acceptance Criteria: Response-time p50/p95, classifier accuracy, and queue depth visible in real time.
+Estimated Effort: 5 story points
+Dependencies: ER-002, ER-006
+
+Task ID: ER-009
+Task Title: Admin configuration panel (routing rules + knowledge base)
+Related User Story: As an IT Administrator, I want to configure routing rules and the knowledge base through a UI so that I can keep the system aligned with evolving business needs.
+Description: CRUD UI for routing rules, knowledge documents, and system settings with RBAC + MFA.
+Acceptance Criteria: All admin actions auditable; rules hot-reloaded without restart.
+Estimated Effort: 8 story points
+Dependencies: ER-003, ER-006
+
+Task ID: ER-010
+Task Title: PII masking and encryption at rest/in transit
+Related User Story: As a Compliance Officer, I want personally identifiable information to be masked before processing so that the system stays compliant with GDPR and CCPA.
+Description: Detect and mask PII before classification; encrypt stored messages with AES-256 and enforce TLS 1.2+ on every network hop.
+Acceptance Criteria: PII masked in >=99% of synthetic validation samples; external pen-test of encryption passes.
+Estimated Effort: 8 story points
+Dependencies: ER-001

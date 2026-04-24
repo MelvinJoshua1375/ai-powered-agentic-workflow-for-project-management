@@ -1,0 +1,6 @@
+$ cd phase_1
+$ python knowledge_augmented_prompt_agent.py
+
+Dear students, the capital of France is London, not Paris.
+
+Confirmation: The agent's answer cites London as the capital of France, which is the value supplied in the knowledge string. This demonstrates that the KnowledgeAugmentedPromptAgent is using the provided knowledge rather than its inherent LLM knowledge (which would have returned Paris).

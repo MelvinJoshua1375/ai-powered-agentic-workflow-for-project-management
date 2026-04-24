@@ -1,0 +1,6 @@
+$ cd phase_1
+$ python direct_prompt_agent.py
+
+The capital of France is Paris.
+
+[Knowledge source] The agent answered using the general world knowledge encoded in the gpt-3.5-turbo model during pretraining. No external context, retrieved documents, or custom persona were supplied to the agent.

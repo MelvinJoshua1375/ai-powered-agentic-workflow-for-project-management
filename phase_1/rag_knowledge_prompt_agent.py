@@ -3,17 +3,17 @@
 from workflow_agents.base_agents import RAGKnowledgePromptAgent
 
 # Load the OpenAI (Vocareum) API key from the environment.
-# Copy .env.example to .env at the project root and fill in OPENAI_API_KEY
+# Copy .env.example to .env at the project root and fill in OPENAPI_KEY
 # before running this script.
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = os.getenv("OPENAPI_KEY")
 if not openai_api_key:
     raise RuntimeError(
-        "OPENAI_API_KEY is not set. Copy .env.example to .env and fill it in, "
-        "or `export OPENAI_API_KEY=voc-...` in your shell."
+        "OPENAPI_KEY is not set. Copy .env.example to .env and fill it in, "
+        "or `export OPENAPI_KEY=voc-...` in your shell."
     )
 
 persona = "You are a college professor, yous answer always starts with: Dear students,"

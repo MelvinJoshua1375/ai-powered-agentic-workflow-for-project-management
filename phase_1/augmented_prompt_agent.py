@@ -3,17 +3,17 @@
 from workflow_agents.base_agents import AugmentedPromptAgent
 
 # Load the OpenAI (Vocareum) API key from the environment.
-# Copy .env.example to .env at the project root and fill in OPENAI_API_KEY
+# Copy .env.example to .env at the project root and fill in OPENAPI_KEY
 # before running this script.
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = os.getenv("OPENAPI_KEY")
 if not openai_api_key:
     raise RuntimeError(
-        "OPENAI_API_KEY is not set. Copy .env.example to .env and fill it in, "
-        "or `export OPENAI_API_KEY=voc-...` in your shell."
+        "OPENAPI_KEY is not set. Copy .env.example to .env and fill it in, "
+        "or `export OPENAPI_KEY=voc-...` in your shell."
     )
 
 prompt = "What is the capital of France?"
@@ -28,12 +28,17 @@ augmented_agent_response = augmented_agent.respond(prompt)
 # Print the agent's response.
 print(augmented_agent_response)
 
-# Comments on knowledge source and the impact of specifying a persona:
-# - Knowledge source: The AugmentedPromptAgent does not receive any external
-#   knowledge string, so its answer still comes from gpt-3.5-turbo's pretrained
-#   general knowledge. It correctly recalls that the capital of France is Paris.
-# - Persona impact: The persona is injected through the system message, which
-#   tells the model to respond as a college professor whose answers start with
-#   "Dear students,". This does not change the factual content of the answer,
-#   but it reshapes the tone, formality, and opening of the response so the
-#   output reads like a short classroom remark rather than a plain factual reply.
+# Print the commentary so the terminal output captures the rubric's required
+# discussion of the knowledge source and the persona's impact.
+print(
+    "\n[Knowledge source] The AugmentedPromptAgent does not receive any external "
+    "knowledge string, so its answer still comes from gpt-3.5-turbo's pretrained "
+    "general knowledge. It correctly recalls that the capital of France is Paris."
+)
+print(
+    "[Persona impact] The persona is injected through the system message, which "
+    "tells the model to respond as a college professor whose answers start with "
+    "'Dear students,'. This does not change the factual content of the answer, "
+    "but it reshapes the tone, formality, and opening so the output reads like a "
+    "short classroom remark rather than a plain factual reply."
+)

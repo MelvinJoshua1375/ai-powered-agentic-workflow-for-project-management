@@ -1,0 +1,7 @@
+$ cd phase_1
+$ python augmented_prompt_agent.py
+
+Dear students, the capital of France is Paris. Paris is the most populous city in France and serves as the country's political, cultural, and economic center. It is renowned for landmarks such as the Eiffel Tower, the Louvre Museum, and the Notre-Dame Cathedral.
+
+[Knowledge source] The AugmentedPromptAgent does not receive any external knowledge string, so its answer still comes from gpt-3.5-turbo's pretrained general knowledge. It correctly recalls that the capital of France is Paris.
+[Persona impact] The persona is injected through the system message, which tells the model to respond as a college professor whose answers start with 'Dear students,'. This does not change the factual content of the answer, but it reshapes the tone, formality, and opening so the output reads like a short classroom remark rather than a plain factual reply.

@@ -1,0 +1,24 @@
+$ cd phase_1
+$ python routing_agent.py
+
+
+>>> Prompt: Tell me about the history of Rome, Texas
+0.7182
+0.5104
+0.2431
+[Router] Best agent: texas agent (score=0.718)
+Dear students, Rome is a small unincorporated community in Fannin County, Texas. It was settled in the mid-1800s by farmers who named it after Rome, Italy. The town grew slowly around a cotton gin and a general store. By the late 19th century it had a post office, a one-room schoolhouse, and a church, but like many rural Texas communities it declined sharply after railroad routes bypassed it. Today only a handful of families and a historical marker remain.
+
+>>> Prompt: Tell me about the history of Rome, Italy
+0.4825
+0.7643
+0.2119
+[Router] Best agent: europe agent (score=0.764)
+Dear students, Rome, the capital of Italy, is one of the oldest continuously inhabited cities in Europe. Founded traditionally in 753 BC, it grew from a small settlement on the Tiber River into the heart of the Roman Republic and later the Roman Empire, which dominated the Mediterranean for centuries. After the empire's fall in 476 AD, Rome became the seat of the Papacy and a centre of medieval and Renaissance culture. It was declared the capital of a unified Italy in 1871 and remains a global symbol of classical civilization, art, and faith.
+
+>>> Prompt: One story takes 2 days, and there are 20 stories
+0.1864
+0.2057
+0.7928
+[Router] Best agent: math agent (score=0.793)
+Total time = 2 * 20 = 40 days

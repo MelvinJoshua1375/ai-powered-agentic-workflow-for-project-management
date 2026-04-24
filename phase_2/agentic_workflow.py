@@ -11,10 +11,11 @@ Pipeline
    functions (Product Manager / Program Manager / Development Engineer) using
    semantic similarity between the sub-task and each team's description.
 3. Each team = ``KnowledgeAugmentedPromptAgent`` (worker) + ``EvaluationAgent``
-   (judge-and-refiner). The support function runs the worker, passes its first
-   answer to the judge, and returns the final validated response.
-4. The completed step results are collected; the final workflow output is the
-   last completed step (typically the engineering task list).
+   (judge-and-refiner). The support function hands the query to the evaluator,
+   which internally calls the worker agent and iterates until the evaluation
+   criteria are met (or the budget is exhausted).
+4. Every validated step is appended to ``completed_steps`` and the full
+   consolidated plan is printed at the end.
 """
 
 import os
@@ -29,14 +30,14 @@ from workflow_agents.base_agents import (
 )
 
 # 2. Load the OpenAI (Vocareum) API key from the environment.
-# Copy .env.example to .env at the project root and fill in OPENAI_API_KEY
+# Copy .env.example to .env at the project root and fill in OPENAPI_KEY
 # before running this workflow.
 load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = os.getenv("OPENAPI_KEY")
 if not openai_api_key:
     raise RuntimeError(
-        "OPENAI_API_KEY is not set. Copy .env.example to .env and fill it in, "
-        "or `export OPENAI_API_KEY=voc-...` in your shell."
+        "OPENAPI_KEY is not set. Copy .env.example to .env and fill it in, "
+        "or `export OPENAPI_KEY=voc-...` in your shell."
     )
 
 # 3. Load the Email Router product specification. Resolved relative to this
@@ -70,7 +71,8 @@ action_planning_agent = ActionPlanningAgent(openai_api_key, knowledge_action_pla
 persona_product_manager = (
     "You are a Product Manager, you are responsible for defining the user stories for a product."
 )
-# TODO 5: append the loaded product_spec so the worker has the spec at hand.
+# The PM needs the full product spec so its user stories are grounded in the
+# actual Email Router capabilities (not generic hallucinations).
 knowledge_product_manager = (
     "Stories are defined by writing sentences with a persona, an action, and a desired outcome. "
     "The sentences always start with: As a "
@@ -103,8 +105,14 @@ product_manager_evaluation_agent = EvaluationAgent(
 persona_program_manager = (
     "You are a Program Manager, you are responsible for defining the features for a product."
 )
+# Append the product spec so the Program Manager groups *actual* Email Router
+# stories into features rather than inventing generic ones.
 knowledge_program_manager = (
-    "Features of a product are defined by organizing similar user stories into cohesive groups."
+    "Features of a product are defined by organizing similar user stories into cohesive groups. "
+    "Group related user stories for the product spec below into features, where each feature should "
+    "include: Feature Name, Description, Key Functionality, and User Benefit.\n\n"
+    "Product Specification:\n"
+    f"{product_spec}"
 )
 program_manager_knowledge_agent = KnowledgeAugmentedPromptAgent(
     openai_api_key, persona_program_manager, knowledge_program_manager
@@ -134,8 +142,14 @@ program_manager_evaluation_agent = EvaluationAgent(
 persona_dev_engineer = (
     "You are a Development Engineer, you are responsible for defining the development tasks for a product."
 )
+# Append the product spec so engineering tasks are scoped to the real system.
 knowledge_dev_engineer = (
-    "Development tasks are defined by identifying what needs to be built to implement each user story."
+    "Development tasks are defined by identifying what needs to be built to implement each user story. "
+    "Break down the product spec below into engineering tasks. Each task must include: "
+    "Task ID, Task Title, Related User Story, Description, Acceptance Criteria, "
+    "Estimated Effort, and Dependencies.\n\n"
+    "Product Specification:\n"
+    f"{product_spec}"
 )
 development_engineer_knowledge_agent = KnowledgeAugmentedPromptAgent(
     openai_api_key, persona_dev_engineer, knowledge_dev_engineer
@@ -165,35 +179,27 @@ development_engineer_evaluation_agent = EvaluationAgent(
 # ---------------------------------------------------------------------------
 # 11. Support functions for each role
 # ---------------------------------------------------------------------------
-# A support function: (1) gets an initial response from its KnowledgeAgent,
-# (2) passes that response into its EvaluationAgent, which iterates until the
-# evaluation criteria are met (or the iteration budget is exhausted), and
-# (3) returns the ``final_response`` from the evaluator's result dict.
+# Each support function passes the raw workflow query directly to its
+# EvaluationAgent. The EvaluationAgent internally calls its worker agent
+# (respond()) inside its refinement loop, so the support function does NOT
+# pre-call respond() -- doing so would create a double-call / hallucination
+# loop (the evaluator would treat the worker's answer as a new prompt).
 
 def product_manager_support_function(query):
     """Run the Product Manager (user stories) pipeline for a workflow step."""
-    response_from_knowledge_agent = product_manager_knowledge_agent.respond(query)
-    evaluation_result = product_manager_evaluation_agent.evaluate(
-        response_from_knowledge_agent
-    )
+    evaluation_result = product_manager_evaluation_agent.evaluate(query)
     return evaluation_result["final_response"]
 
 
 def program_manager_support_function(query):
     """Run the Program Manager (features) pipeline for a workflow step."""
-    response_from_knowledge_agent = program_manager_knowledge_agent.respond(query)
-    evaluation_result = program_manager_evaluation_agent.evaluate(
-        response_from_knowledge_agent
-    )
+    evaluation_result = program_manager_evaluation_agent.evaluate(query)
     return evaluation_result["final_response"]
 
 
 def development_engineer_support_function(query):
     """Run the Development Engineer (tasks) pipeline for a workflow step."""
-    response_from_knowledge_agent = development_engineer_knowledge_agent.respond(query)
-    evaluation_result = development_engineer_evaluation_agent.evaluate(
-        response_from_knowledge_agent
-    )
+    evaluation_result = development_engineer_evaluation_agent.evaluate(query)
     return evaluation_result["final_response"]
 
 
@@ -235,7 +241,14 @@ routing_agent.agents = [
 # ---------------------------------------------------------------------------
 print("\n*** Workflow execution started ***\n")
 
-workflow_prompt = "What would the development tasks for this product be?"
+# Broad prompt so the Action Planning Agent produces steps covering all three
+# roles (user stories AND features AND engineering tasks), which in turn
+# triggers all three routes instead of skipping straight to tasks.
+workflow_prompt = (
+    "Create a comprehensive development plan for the Email Router product, "
+    "including user stories, grouped product features, and detailed "
+    "engineering tasks."
+)
 print(f"Task to complete in this workflow, workflow prompt = {workflow_prompt}")
 
 print("\nDefining workflow steps from the workflow prompt")
@@ -260,8 +273,11 @@ for i, step in enumerate(workflow_steps, 1):
     print(f"Result for step {i}:\n{step_result}")
 
 print("\n\n*** Workflow execution complete ***\n")
-print("Final output of the workflow:")
+print("Final consolidated project plan (all routed steps):\n")
 if completed_steps:
-    print(completed_steps[-1])
+    # Print every validated step, separated by blank lines, so the terminal
+    # output contains the full project plan (user stories + features + tasks)
+    # rather than only the last step.
+    print("\n\n".join(completed_steps))
 else:
     print("(no steps were produced by the action planning agent)")

@@ -326,7 +326,7 @@ class EvaluationAgent:
 
         return {
             "final_response": response_from_worker,
-            "final_evaluation": evaluation,
+            "evaluation": evaluation,
             "iterations": iterations,
         }
 

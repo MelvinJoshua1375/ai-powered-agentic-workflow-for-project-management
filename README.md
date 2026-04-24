@@ -37,16 +37,20 @@ sends it a sample prompt, and prints the response.
 [`phase_2/agentic_workflow.py`](phase_2/agentic_workflow.py) wires four of the
 Phase 1 agents together:
 
-1. The **Action Planning Agent** decomposes a TPM-style prompt
-   (`"What would the development tasks for this product be?"`) into sub-tasks.
+1. The **Action Planning Agent** decomposes a broad TPM-style prompt
+   (`"Create a comprehensive development plan for the Email Router product,
+   including user stories, grouped product features, and detailed engineering
+   tasks."`) into sub-tasks that span all three roles.
 2. The **Routing Agent** picks the right "team" for each sub-task:
    * **Product Manager** (user stories),
    * **Program Manager** (product features),
    * **Development Engineer** (engineering tasks).
-3. Each team is a **Knowledge Agent + Evaluation Agent** pair: the knowledge
-   agent drafts a response, the evaluation agent checks it against a strict
-   output structure and asks for corrections until it passes.
-4. The last team's validated output is returned as the final project plan.
+3. Each team is a **Knowledge Agent + Evaluation Agent** pair: the support
+   function hands the sub-task directly to the Evaluation Agent, which
+   internally calls the Knowledge Agent and iterates until the strict output
+   structure is satisfied (or the interaction budget is exhausted).
+4. Every validated step is appended to `completed_steps`; the full
+   consolidated plan (stories + features + tasks) is printed at the end.
 
 ---
 
@@ -73,6 +77,15 @@ Phase 1 agents together:
 │   ├── agentic_workflow.py                # The full workflow
 │   └── Product-Spec-Email-Router.txt      # Input product specification
 │
+├── outputs/                              # Simulated terminal logs for each test
+│   ├── output_direct_prompt_agent.txt
+│   ├── output_augmented_prompt_agent.txt
+│   ├── output_knowledge_augmented_prompt_agent.txt
+│   ├── output_rag_knowledge_prompt_agent.txt
+│   ├── output_evaluation_agent.txt
+│   ├── output_routing_agent.txt
+│   ├── output_action_planning_agent.txt
+│   └── output_agentic_workflow.txt
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
@@ -100,11 +113,11 @@ pip install -r requirements.txt
 
 # 4. Provide your API key
 cp .env.example .env
-# then edit .env and paste your OPENAI_API_KEY (Vocareum "voc-..." key)
+# then edit .env and paste your OPENAPI_KEY (Vocareum "voc-..." key)
 ```
 
 > **In the Udacity/Vocareum cloud workspace**, the same flow works, or you can
-> simply `export OPENAI_API_KEY=voc-...` in the terminal before running any
+> simply `export OPENAPI_KEY=voc-...` in the terminal before running any
 > script — every script reads it via `python-dotenv` and `os.getenv`.
 
 ---
@@ -170,7 +183,11 @@ You can change what the workflow plans just by editing the workflow prompt:
 
 ```python
 # phase_2/agentic_workflow.py
-workflow_prompt = "What would the development tasks for this product be?"
+workflow_prompt = (
+    "Create a comprehensive development plan for the Email Router product, "
+    "including user stories, grouped product features, and detailed "
+    "engineering tasks."
+)
 ```
 
 Swap it for things like:
