@@ -214,7 +214,85 @@ Yes. Each task contains Task ID, Task Title, Related User Story, Description, Ac
  Step 3: Check if evaluation is positive
 Final solution accepted.
 Result for step 3:
-(same engineering task list as above, ER-001 through ER-010)
+Task ID: ER-001
+Task Title: Implement SMTP/IMAP/REST email ingestion connectors
+Related User Story: As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+Description: Build pluggable connectors that pull messages from the organisation's SMTP/IMAP servers and a REST webhook, extract headers and body, and publish to the classification queue.
+Acceptance Criteria: Connectors authenticate securely, deliver at least one message end-to-end in staging, handle reconnection on transient failures.
+Estimated Effort: 5 story points
+Dependencies: None
+
+Task ID: ER-002
+Task Title: Build LLM-based intent & urgency classifier
+Related User Story: As a Customer Support Representative, I want incoming emails to be auto-classified by intent and urgency so that I can prioritise my day without manual triage.
+Description: Wrap gpt-3.5-turbo with a prompt template that returns category, urgency, and a confidence score. Persist the classification alongside the message.
+Acceptance Criteria: 90% accuracy on a labelled validation set; confidence returned as a float 0-1; results stored in the messages table.
+Estimated Effort: 8 story points
+Dependencies: ER-001
+
+Task ID: ER-003
+Task Title: Knowledge base vector store + retrieval service
+Related User Story: As an End Customer, I want to receive an accurate response quickly so that I am not left waiting for routine information.
+Description: Stand up a vector database, embed all organisational knowledge documents, and expose a retrieval API that returns the top-k chunks for a query.
+Acceptance Criteria: Embeddings re-generated nightly; retrieval returns results under 200ms p95; API secured with service-to-service auth.
+Estimated Effort: 8 story points
+Dependencies: None
+
+Task ID: ER-004
+Task Title: RAG-based response drafting pipeline
+Related User Story: As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+Description: Compose the retrieved context with the incoming email and ask the LLM to draft a reply. Store drafts in a pending-approval queue.
+Acceptance Criteria: Draft reply includes citations to retrieved chunks; drafts persisted with status "awaiting approval".
+Estimated Effort: 5 story points
+Dependencies: ER-002, ER-003
+
+Task ID: ER-005
+Task Title: Human-in-the-loop approval UI
+Related User Story: As a Customer Support Representative, I want routine inquiries to be answered automatically so that I can focus my time on complex customer issues.
+Description: Web UI to review, edit, approve, or reject drafted responses before dispatch.
+Acceptance Criteria: Reviewer can approve or edit in under 30 seconds; all actions audited.
+Estimated Effort: 5 story points
+Dependencies: ER-004
+
+Task ID: ER-006
+Task Title: Rule-based SME routing engine
+Related User Story: As a Subject Matter Expert, I want only relevant complex inquiries routed to me so that I am not overwhelmed by misdirected emails.
+Description: Evaluate routing rules against each classified message and forward to the SME inbox with full metadata.
+Acceptance Criteria: Rules configurable via UI; routing decisions logged with reason codes.
+Estimated Effort: 5 story points
+Dependencies: ER-002
+
+Task ID: ER-007
+Task Title: Context-aware SME handoff packaging
+Related User Story: As a Subject Matter Expert, I want forwarded emails to arrive with the original context and previous correspondence attached so that I can respond accurately without hunting for background information.
+Description: Bundle previous thread messages, classification metadata, and any retrieved knowledge into the forwarded email.
+Acceptance Criteria: Forwarded email includes full prior thread and a one-line AI summary; size under 10 MB.
+Estimated Effort: 3 story points
+Dependencies: ER-006
+
+Task ID: ER-008
+Task Title: Metrics dashboard (response time, accuracy, backlog)
+Related User Story: As an IT Administrator, I want a dashboard of response-time and accuracy metrics so that I can monitor the Email Router's performance and plan capacity.
+Description: Emit metrics from every pipeline stage and render them in a Grafana-like dashboard.
+Acceptance Criteria: Response-time p50/p95, classifier accuracy, and queue depth visible in real time.
+Estimated Effort: 5 story points
+Dependencies: ER-002, ER-006
+
+Task ID: ER-009
+Task Title: Admin configuration panel (routing rules + knowledge base)
+Related User Story: As an IT Administrator, I want to configure routing rules and the knowledge base through a UI so that I can keep the system aligned with evolving business needs.
+Description: CRUD UI for routing rules, knowledge documents, and system settings with RBAC + MFA.
+Acceptance Criteria: All admin actions auditable; rules hot-reloaded without restart.
+Estimated Effort: 8 story points
+Dependencies: ER-003, ER-006
+
+Task ID: ER-010
+Task Title: PII masking and encryption at rest/in transit
+Related User Story: As a Compliance Officer, I want personally identifiable information to be masked before processing so that the system stays compliant with GDPR and CCPA.
+Description: Detect and mask PII before classification; encrypt stored messages with AES-256 and enforce TLS 1.2+ on every network hop.
+Acceptance Criteria: PII masked in >=99% of synthetic validation samples; external pen-test of encryption passes.
+Estimated Effort: 8 story points
+Dependencies: ER-001
 
 
 *** Workflow execution complete ***
