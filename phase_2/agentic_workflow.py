@@ -215,8 +215,7 @@ def development_engineer_support_function(query):
 # ---------------------------------------------------------------------------
 # 10. Routing Agent
 # ---------------------------------------------------------------------------
-routing_agent = RoutingAgent(openai_api_key, [])
-routing_agent.agents = [
+routes = [
     {
         "name": "Product Manager",
         "description": (
@@ -243,6 +242,7 @@ routing_agent.agents = [
         "func": lambda x: development_engineer_support_function(x),
     },
 ]
+routing_agent = RoutingAgent(openai_api_key, routes)
 
 
 # ---------------------------------------------------------------------------

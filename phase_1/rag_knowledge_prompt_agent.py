@@ -51,7 +51,7 @@ Her life and work were testaments to the power of connecting across disciplines,
 """
 
 chunks = RAG_knowledge_prompt_agent.chunk_text(knowledge_text)
-embbedings = RAG_knowledge_prompt_agent.calculate_embeddings()
+embeddings = RAG_knowledge_prompt_agent.calculate_embeddings()
 
 prompt = "What is the podcast that Clara hosts about?"
 print(prompt)

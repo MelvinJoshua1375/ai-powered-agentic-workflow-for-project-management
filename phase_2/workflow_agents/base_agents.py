@@ -374,7 +374,6 @@ class RoutingAgent:
             similarity = np.dot(input_emb, agent_emb) / (
                 np.linalg.norm(input_emb) * np.linalg.norm(agent_emb)
             )
-            print(similarity)
 
             if similarity > best_score:
                 best_score = similarity

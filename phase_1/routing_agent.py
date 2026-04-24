@@ -38,8 +38,7 @@ math_knowledge = (
 math_agent = KnowledgeAugmentedPromptAgent(openai_api_key, math_persona, math_knowledge)
 
 # Routing agent ------------------------------------------------------------
-routing_agent = RoutingAgent(openai_api_key, [])
-routing_agent.agents = [
+agents = [
     {
         "name": "texas agent",
         "description": "Answer a question about Texas",
@@ -56,6 +55,7 @@ routing_agent.agents = [
         "func": lambda x: math_agent.respond(x),
     },
 ]
+routing_agent = RoutingAgent(openai_api_key, agents)
 
 # Route and print the response for each of the three sample prompts.
 prompts = [
